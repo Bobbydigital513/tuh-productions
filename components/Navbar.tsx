@@ -28,7 +28,6 @@ export default function Navbar() {
             width={36}
             height={36}
             className="rounded-full"
-            unoptimized
           />
           <span className="font-display text-lg tracking-wide text-white">
             {company.name.toUpperCase()}
