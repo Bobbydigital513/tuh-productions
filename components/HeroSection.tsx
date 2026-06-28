@@ -137,7 +137,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 z-10 bg-[#0c0c0e]">
           <video
             ref={videoRef}
-            src="/skyline.mp4"
+            src={company.heroVideoUrl}
             muted
             playsInline
             preload="metadata"
@@ -229,11 +229,12 @@ export default function HeroSection() {
             }}
           >
             <Image
-              src="/tuh-logo.png"
+              src={company.logoUrl}
               alt="TUH Productions"
               width={260}
               height={260}
               priority
+              unoptimized
             />
           </div>
         </div>

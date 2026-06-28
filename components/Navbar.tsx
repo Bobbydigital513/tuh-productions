@@ -23,11 +23,12 @@ export default function Navbar() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6">
         <a href="#" className="flex items-center gap-3">
           <Image
-            src="/tuh-logo.png"
+            src={company.logoUrl}
             alt="TUH Productions"
             width={36}
             height={36}
             className="rounded-full"
+            unoptimized
           />
           <span className="font-display text-lg tracking-wide text-white">
             {company.name.toUpperCase()}
