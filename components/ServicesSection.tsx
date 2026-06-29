@@ -14,7 +14,7 @@ export default function ServicesSection() {
           inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
         }`}
       >
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.4em] text-tuh-cyan">
+        <p className="text-center text-xs font-semibold uppercase tracking-[0.4em] text-white/70">
           What We Do
         </p>
         <h2 className="mt-3 text-center font-display text-4xl text-white sm:text-5xl">
@@ -24,9 +24,9 @@ export default function ServicesSection() {
           {company.services.map((service, i) => (
             <div
               key={service}
-              className="group rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-tuh-cyan/50 hover:bg-white/[0.06]"
+              className="group rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white/[0.06]"
             >
-              <span className="font-display text-2xl text-tuh-magenta">
+              <span className="font-display text-2xl text-white/50">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="mt-4 text-xl font-semibold text-white">{service}</h3>

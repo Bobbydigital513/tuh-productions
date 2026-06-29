@@ -5,8 +5,13 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { company } from "@/lib/company";
 
-const NUM_KEYS = 18;
 const NOTES = ["♪", "♫", "♬"];
+
+// One octave: C D E F G A B (white), with black keys after C, D, F, G, A.
+const OCTAVE_WHITE = 7;
+const BLACK_AFTER = new Set([0, 1, 3, 4, 5]);
+const NUM_OCTAVES = 3;
+const TOTAL_WHITE = OCTAVE_WHITE * NUM_OCTAVES;
 
 function noteField() {
   return Array.from({ length: 20 }, (_, i) => ({
@@ -16,7 +21,7 @@ function noteField() {
     delay: Math.random() * 5,
     duration: 5 + Math.random() * 5,
     size: 14 + Math.random() * 20,
-    color: i % 2 === 0 ? "#34e3ff" : "#ff2da0",
+    color: i % 2 === 0 ? "#e8e8e8" : "#9a9a9a",
   }));
 }
 
@@ -111,14 +116,36 @@ export default function HeroSection() {
     };
   }, [scrollYProgress, p2Start, p4End]);
 
-  // Each piano key lifts away in a left-to-right glissando sweep.
-  const keyStagger = (p2End - p2Start) / (NUM_KEYS + 6);
-  const keys = Array.from({ length: NUM_KEYS }, (_, i) => {
-    const start = p2Start + i * keyStagger;
-    const end = start + keyStagger * 5;
-    const lift = clampMap(rawProgress, start, end, 0, 1);
-    return { isBlack: i % 2 === 1, lift };
+  // Each piano key lifts away in a left-to-right glissando sweep, timed by its x position.
+  const sweepRange = p2End - p2Start;
+  const liftDuration = sweepRange / 4;
+  const liftAt = (fraction: number) => {
+    const start = p2Start + fraction * (sweepRange - liftDuration);
+    const end = start + liftDuration;
+    return clampMap(rawProgress, start, end, 0, 1);
+  };
+
+  const whiteKeys = Array.from({ length: TOTAL_WHITE }, (_, i) => {
+    const fraction = i / (TOTAL_WHITE - 1);
+    return { lift: liftAt(fraction) };
   });
+
+  const blackKeys: { leftPercent: number; widthPercent: number; lift: number }[] = [];
+  const whiteKeyWidthPercent = 100 / TOTAL_WHITE;
+  for (let o = 0; o < NUM_OCTAVES; o++) {
+    for (let w = 0; w < OCTAVE_WHITE; w++) {
+      if (!BLACK_AFTER.has(w)) continue;
+      const whiteIndex = o * OCTAVE_WHITE + w;
+      const boundaryPercent = (whiteIndex + 1) * whiteKeyWidthPercent;
+      const widthPercent = whiteKeyWidthPercent * 0.62;
+      const fraction = boundaryPercent / 100;
+      blackKeys.push({
+        leftPercent: boundaryPercent - widthPercent / 2,
+        widthPercent,
+        lift: liftAt(fraction),
+      });
+    }
+  }
 
   return (
     <section ref={containerRef} className="relative h-[320vh] bg-[#0a0a0a]">
@@ -147,7 +174,7 @@ export default function HeroSection() {
           <motion.div
             className="absolute inset-0"
             style={{
-              background: "linear-gradient(160deg, #34e3ff 0%, #ff2da0 100%)",
+              background: "linear-gradient(160deg, #2a2a2a 0%, #050505 100%)",
               mixBlendMode: "overlay",
               opacity: gradeOpacity,
             }}
@@ -167,19 +194,41 @@ export default function HeroSection() {
           className="absolute inset-0 z-20 flex"
           style={{ perspective: "1400px" }}
         >
-          {keys.map((key, i) => (
+          {whiteKeys.map((key, i) => (
             <div
               key={i}
-              className="h-full flex-1 origin-top"
+              className="relative h-full flex-1 origin-top border-r border-black/30"
               style={{
-                background: key.isBlack ? "#0a0a0a" : "#f5f5f0",
-                borderRight: "1px solid rgba(0,0,0,0.4)",
+                background:
+                  "linear-gradient(180deg, #ffffff 0%, #f5f5f0 78%, #ddddd6 100%)",
                 transform: `rotateX(${key.lift * -110}deg) translateY(${key.lift * -4}%)`,
                 opacity: 1 - key.lift,
                 boxShadow:
                   key.lift > 0 && key.lift < 1
                     ? "0 30px 40px -10px rgba(0,0,0,0.6)"
-                    : "none",
+                    : "inset 0 -10px 14px -8px rgba(0,0,0,0.25)",
+                transformStyle: "preserve-3d",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* black keys, shorter and overlapping the white key boundaries */}
+        <div className="absolute inset-0 z-[21]" style={{ perspective: "1400px" }}>
+          {blackKeys.map((key, i) => (
+            <div
+              key={i}
+              className="absolute top-0 h-[62%] origin-top rounded-b-sm"
+              style={{
+                left: `${key.leftPercent}%`,
+                width: `${key.widthPercent}%`,
+                background: "linear-gradient(180deg, #1a1a1a 0%, #050505 85%)",
+                transform: `rotateX(${key.lift * -110}deg) translateY(${key.lift * -4}%)`,
+                opacity: 1 - key.lift,
+                boxShadow:
+                  key.lift > 0 && key.lift < 1
+                    ? "0 24px 30px -10px rgba(0,0,0,0.7)"
+                    : "0 2px 4px rgba(0,0,0,0.5)",
                 transformStyle: "preserve-3d",
               }}
             />
@@ -225,14 +274,14 @@ export default function HeroSection() {
             style={{
               transform: `scale(${phase1ScaleRaw})`,
               filter:
-                "drop-shadow(0 14px 30px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(52,227,255,0.45))",
+                "drop-shadow(0 14px 30px rgba(0,0,0,0.7)) drop-shadow(0 0 70px rgba(255,255,255,0.35))",
             }}
           >
             <Image
               src={company.logoUrl}
               alt="TUH Productions"
-              width={260}
-              height={260}
+              width={460}
+              height={460}
               priority
             />
           </div>
@@ -287,7 +336,7 @@ export default function HeroSection() {
               transform: `translateY(${subYRaw}px)`,
               textShadow: "0 1px 12px rgba(0,0,0,0.9)",
             }}
-            className="mt-2 text-sm font-semibold uppercase tracking-[0.4em] text-tuh-cyan"
+            className="mt-2 text-sm font-semibold uppercase tracking-[0.4em] text-white/80"
           >
             Production &amp; Engineering
           </p>
@@ -295,7 +344,7 @@ export default function HeroSection() {
           <span
             style={{
               width: `${dividerWidthRaw}%`,
-              background: "linear-gradient(90deg, #34e3ff, #ff2da0)",
+              background: "linear-gradient(90deg, #ffffff, #888888)",
             }}
             className="mt-6 h-px max-w-xs"
           />
@@ -327,7 +376,7 @@ export default function HeroSection() {
               opacity: ctaOpacityRaw,
               transform: `translateY(${ctaYRaw}px)`,
             }}
-            className="pointer-events-auto group mt-10 rounded-full border border-tuh-cyan bg-[#0a0a0a]/40 px-10 py-4 text-sm font-semibold uppercase tracking-wider text-tuh-cyan backdrop-blur-sm transition-all duration-300 hover:bg-tuh-cyan hover:text-[#0a0a0a] hover:shadow-[0_0_30px_rgba(52,227,255,0.5)]"
+            className="pointer-events-auto group mt-10 rounded-full border border-white/70 bg-[#0a0a0a]/40 px-10 py-4 text-sm font-semibold uppercase tracking-wider text-white backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-[#0a0a0a] hover:shadow-[0_0_30px_rgba(255,255,255,0.35)]"
           >
             {company.heroCta}
           </a>

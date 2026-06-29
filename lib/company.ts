@@ -15,4 +15,9 @@ export const company = {
     "Sound Design",
     "Artist Development",
   ],
+  merch: [
+    { name: "TUH Tee", price: "$35", image: "/merch/tuh-tshirt.png" },
+    { name: "TUH Hoodie", price: "$65", image: "/merch/tuh-hoodie.png" },
+    { name: "TUH Crewneck", price: "$55", image: "/merch/tuh-sweatshirt.png" },
+  ],
 };

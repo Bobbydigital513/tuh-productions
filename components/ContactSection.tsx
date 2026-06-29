@@ -25,7 +25,7 @@ export default function ContactSection() {
         </p>
         <a
           href={`mailto:${company.email}`}
-          className="mt-10 inline-block rounded-full border border-tuh-cyan px-10 py-4 text-sm font-semibold uppercase tracking-wider text-tuh-cyan transition-all duration-300 hover:bg-tuh-cyan hover:text-[#0a0a0a] hover:shadow-[0_0_30px_rgba(52,227,255,0.5)]"
+          className="mt-10 inline-block rounded-full border border-white/70 px-10 py-4 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:bg-white hover:text-[#0a0a0a] hover:shadow-[0_0_30px_rgba(255,255,255,0.35)]"
         >
           {company.email}
         </a>

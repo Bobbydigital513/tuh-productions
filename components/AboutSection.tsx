@@ -14,7 +14,7 @@ export default function AboutSection() {
           inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
         }`}
       >
-        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-tuh-magenta">
+        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/50">
           Based in {company.location}
         </p>
         <h2 className="mt-3 font-display text-4xl text-white sm:text-5xl">

@@ -34,15 +34,15 @@ export default function Navbar() {
           </span>
         </a>
         <div className="hidden items-center gap-8 text-sm font-medium uppercase tracking-wider text-white/80 sm:flex">
-          <a href="#services" className="transition hover:text-tuh-cyan">
+          <a href="#services" className="transition hover:text-white">
             Services
           </a>
-          <a href="#about" className="transition hover:text-tuh-cyan">
+          <a href="#about" className="transition hover:text-white">
             About
           </a>
           <a
             href="#contact"
-            className="rounded-full border border-white/30 px-5 py-2 transition hover:border-tuh-cyan hover:text-tuh-cyan"
+            className="rounded-full border border-white/30 px-5 py-2 transition hover:border-white hover:text-white"
           >
             Contact
           </a>
