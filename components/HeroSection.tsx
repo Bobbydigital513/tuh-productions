@@ -320,16 +320,21 @@ export default function HeroSection() {
 
         {/* Phase 4: hero copy */}
         <div className="pointer-events-none absolute inset-0 z-50 flex flex-col items-center justify-center px-6 text-center">
-          <h1
+          <div
             style={{
               opacity: headlineOpacityRaw,
               transform: `translateY(${headlineYRaw}px)`,
-              textShadow: "0 2px 24px rgba(0,0,0,0.85), 0 1px 6px rgba(0,0,0,0.9)",
+              filter: "drop-shadow(0 2px 24px rgba(0,0,0,0.85)) drop-shadow(0 1px 6px rgba(0,0,0,0.9))",
             }}
-            className="font-display text-6xl tracking-wide text-white sm:text-8xl md:text-9xl"
           >
-            TUH PRODUCTIONS
-          </h1>
+            <Image
+              src={company.logoUrl}
+              alt="TUH Productions"
+              width={220}
+              height={220}
+              className="w-40 sm:w-56 md:w-64"
+            />
+          </div>
           <p
             style={{
               opacity: subOpacityRaw,
