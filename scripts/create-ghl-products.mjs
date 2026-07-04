@@ -146,9 +146,9 @@ async function main() {
         locationId: LOCATION_ID,
         name,
       });
-      const id = data?.collection?.id ?? data?.id;
+      const id = data?._id ?? data?.collection?._id ?? data?.id ?? data?.collection?.id;
       collectionMap[name] = id;
-      console.log(`  ✅  Collection "${name}" → ${id}`);
+      console.log(`  ✅  Collection "${name}" → ${id} (raw: ${JSON.stringify(data)})`);
     } catch (err) {
       // Collection may already exist — log and continue
       console.warn(`  ⚠️  Collection "${name}": ${err.message}`);
@@ -172,18 +172,10 @@ async function main() {
           : {}),
       };
       const productData = await apiPost("/products/", productBody);
-
-      // Try every known GHL response shape
-      const productId =
-        productData?._id ??
-        productData?.id ??
-        productData?.product?._id ??
-        productData?.product?.id ??
-        productData?.data?._id ??
-        productData?.data?.id;
+      const productId = productData?._id ?? productData?.product?._id;
 
       if (!productId) {
-        console.error(`  ⚠️  Could not find ID in response: ${JSON.stringify(productData)}`);
+        console.error(`  ⚠️  No ID in response: ${JSON.stringify(productData)}`);
         continue;
       }
 

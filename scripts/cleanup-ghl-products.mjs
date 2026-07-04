@@ -38,11 +38,12 @@ async function main() {
 
   for (const item of items) {
     const id = item._id ?? item.id;
-    const delRes = await fetch(`${BASE_URL}/products/${id}`, {
-      method: "DELETE",
-      headers,
-    });
-    console.log(`  ${delRes.ok ? "✅" : "❌"}  Deleted "${item.name}" (${id}) — ${delRes.status}`);
+    const delRes = await fetch(
+      `${BASE_URL}/products/${id}?locationId=${LOCATION_ID}`,
+      { method: "DELETE", headers }
+    );
+    const delText = await delRes.text();
+    console.log(`  ${delRes.ok ? "✅" : "❌"}  "${item.name}" (${id}) — ${delRes.status} ${delText}`);
   }
 
   console.log("\nDone. Re-run create-ghl-products.mjs now.");
