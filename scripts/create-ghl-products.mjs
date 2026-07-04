@@ -172,7 +172,20 @@ async function main() {
           : {}),
       };
       const productData = await apiPost("/products/", productBody);
-      const productId = productData?.product?.id ?? productData?.id;
+
+      // Try every known GHL response shape
+      const productId =
+        productData?._id ??
+        productData?.id ??
+        productData?.product?._id ??
+        productData?.product?.id ??
+        productData?.data?._id ??
+        productData?.data?.id;
+
+      if (!productId) {
+        console.error(`  ⚠️  Could not find ID in response: ${JSON.stringify(productData)}`);
+        continue;
+      }
 
       // Create price (sale + compare-at)
       await apiPost(`/products/${productId}/price`, {
