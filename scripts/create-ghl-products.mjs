@@ -142,9 +142,13 @@ async function main() {
 
   for (const name of collectionNames) {
     try {
+      const slug = name.toLowerCase().replace(/\s+/g, "-");
       const data = await apiPost("/products/collections", {
         locationId: LOCATION_ID,
         name,
+        slug,
+        altId: LOCATION_ID,
+        altType: "location",
       });
       const id = data?._id ?? data?.collection?._id ?? data?.id ?? data?.collection?.id;
       collectionMap[name] = id;
@@ -184,8 +188,8 @@ async function main() {
         locationId: LOCATION_ID,
         name: "Standard",
         type: "one_time",
-        amount: p.price * 100,        // in cents
-        compareAtAmount: originalPrice * 100,
+        amount: p.price,
+        compareAtPrice: originalPrice,
         currency: "USD",
       });
 
