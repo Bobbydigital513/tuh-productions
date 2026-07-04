@@ -171,6 +171,7 @@ async function main() {
         description: p.description,
         productType: "SERVICE",
         image: LOGO_URL,
+        availableInStore: true,
         ...(collectionMap[p.collection]
           ? { collectionIds: [collectionMap[p.collection]] }
           : {}),
