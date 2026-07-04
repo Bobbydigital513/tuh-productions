@@ -22,14 +22,15 @@ export default function BeatStarsSection() {
 
         <div className="mt-12 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
           <iframe
-            src="https://www.beatstars.com/embed-player/?widget=large-marketplace-player&type=collection&id=4187472&views=1"
+            src="https://player.beatstars.com/?storeId=152600"
             title="BeatStars Player"
             width="100%"
-            height="500"
+            height="800"
             frameBorder="0"
             allow="autoplay; encrypted-media"
             loading="lazy"
-            className="h-[500px] w-full"
+            className="w-full"
+            style={{ maxWidth: "1024px", height: "800px" }}
           />
         </div>
       </div>

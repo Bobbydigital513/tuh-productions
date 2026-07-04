@@ -5,34 +5,15 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { company } from "@/lib/company";
 
-const NOTES = ["♪", "♫", "♬"];
-
 // One octave: C D E F G A B (white), with black keys after C, D, F, G, A.
 const OCTAVE_WHITE = 7;
 const BLACK_AFTER = new Set([0, 1, 3, 4, 5]);
 const NUM_OCTAVES = 3;
 const TOTAL_WHITE = OCTAVE_WHITE * NUM_OCTAVES;
 
-function noteField() {
-  return Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    note: NOTES[i % NOTES.length],
-    left: `${Math.random() * 100}%`,
-    delay: Math.random() * 5,
-    duration: 5 + Math.random() * 5,
-    size: 14 + Math.random() * 20,
-    color: i % 2 === 0 ? "#e8e8e8" : "#9a9a9a",
-  }));
-}
-
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [notes, setNotes] = useState<ReturnType<typeof noteField>>([]);
-
-  useEffect(() => {
-    setNotes(noteField());
-  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -191,8 +172,8 @@ export default function HeroSection() {
 
         {/* piano key reveal: keys flip up and away, exposing the video underneath */}
         <div
-          className="absolute inset-0 z-20 flex"
-          style={{ perspective: "1400px" }}
+          className="absolute inset-x-0 bottom-0 z-20 flex"
+          style={{ perspective: "1400px", top: "64px" }}
         >
           {whiteKeys.map((key, i) => (
             <div
@@ -214,7 +195,7 @@ export default function HeroSection() {
         </div>
 
         {/* black keys, shorter and overlapping the white key boundaries */}
-        <div className="absolute inset-0 z-[21]" style={{ perspective: "1400px" }}>
+        <div className="absolute inset-x-0 bottom-0 z-[21]" style={{ perspective: "1400px", top: "64px" }}>
           {blackKeys.map((key, i) => (
             <div
               key={i}
@@ -235,24 +216,6 @@ export default function HeroSection() {
           ))}
         </div>
 
-        {/* floating music notes */}
-        <div className="pointer-events-none absolute inset-0 z-30 overflow-hidden">
-          {notes.map((n) => (
-            <span
-              key={n.id}
-              className="absolute bottom-0 font-bold"
-              style={{
-                left: n.left,
-                fontSize: n.size,
-                color: n.color,
-                textShadow: `0 0 12px ${n.color}`,
-                animation: `note-drift ${n.duration}s ease-in ${n.delay}s infinite`,
-              }}
-            >
-              {n.note}
-            </span>
-          ))}
-        </div>
 
         {/* film grain */}
         <div
