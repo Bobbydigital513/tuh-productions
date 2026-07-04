@@ -150,7 +150,7 @@ async function main() {
         altId: LOCATION_ID,
         altType: "location",
       });
-      const id = data?._id ?? data?.collection?._id ?? data?.id ?? data?.collection?.id;
+      const id = data?.data?._id ?? data?._id ?? data?.collection?._id ?? data?.id;
       collectionMap[name] = id;
       console.log(`  ✅  Collection "${name}" → ${id} (raw: ${JSON.stringify(data)})`);
     } catch (err) {
