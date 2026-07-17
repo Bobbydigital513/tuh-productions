@@ -27,7 +27,14 @@ export default function SurveySection() {
         </h2>
 
         <form
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={(e) => {
+            e.preventDefault();
+            const url =
+              budget === "Under $500"
+                ? "https://store.tuhproductions.com/tuh-productions"
+                : "https://store.tuhproductions.com/tuh-productions-high-ticket";
+            window.open(url, "_blank");
+          }}
           className="mt-12 space-y-8 rounded-2xl border border-white/10 bg-white/[0.03] p-8"
         >
           <div>
@@ -91,9 +98,10 @@ export default function SurveySection() {
 
           <button
             type="submit"
-            className="w-full rounded-full border border-white/70 bg-white py-4 text-sm font-semibold uppercase tracking-wider text-[#0a0a0a] transition-all duration-300 hover:bg-white/90"
+            disabled={!budget}
+            className="w-full rounded-full border border-white/70 bg-white py-4 text-sm font-semibold uppercase tracking-wider text-[#0a0a0a] transition-all duration-300 hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Submit
+            See Your Options
           </button>
         </form>
       </div>
