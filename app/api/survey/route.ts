@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const WEBHOOK_URL = process.env.GHL_WEBHOOK_URL!;
-
 export async function POST(req: NextRequest) {
+  const WEBHOOK_URL = process.env.GHL_WEBHOOK_URL;
   if (!WEBHOOK_URL) {
     return NextResponse.json({ error: "Webhook not configured" }, { status: 500 });
   }
