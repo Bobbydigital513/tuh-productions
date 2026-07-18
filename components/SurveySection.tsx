@@ -25,11 +25,24 @@ export default function SurveySection() {
     setLoading(true);
     setError(null);
 
+    const WEBHOOK = "https://services.leadconnectorhq.com/hooks/R65BWAtYpLsjo14I3Vii/webhook-trigger/91acf310-30f0-410a-9b79-b227d77310f3";
     try {
-      const res = await fetch("/api/survey", {
+      const [firstName, ...rest] = name.trim().split(" ");
+      const res = await fetch(WEBHOOK, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, projectType, budget, notes }),
+        body: JSON.stringify({
+          firstName,
+          lastName: rest.join(" "),
+          email,
+          phone,
+          projectType,
+          budget,
+          notes,
+          "contact.project_type": projectType,
+          "contact.budget": budget,
+          "contact.project_notes": notes,
+        }),
       });
       if (!res.ok) throw new Error("Something went wrong. Please try again.");
 
