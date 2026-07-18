@@ -25,16 +25,25 @@ export async function POST(req: NextRequest) {
     "contact.project_notes": notes,
   };
 
-  const res = await fetch(WEBHOOK_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+  console.log("Sending to GHL webhook:", WEBHOOK_URL);
 
-  if (!res.ok) {
+  try {
+    const res = await fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
     const text = await res.text();
-    return NextResponse.json({ error: text }, { status: res.status });
-  }
+    console.log("GHL response:", res.status, text);
 
-  return NextResponse.json({ ok: true });
+    if (!res.ok) {
+      return NextResponse.json({ error: text }, { status: res.status });
+    }
+
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error("Fetch error:", err);
+    return NextResponse.json({ error: String(err) }, { status: 500 });
+  }
 }
