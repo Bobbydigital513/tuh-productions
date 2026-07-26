@@ -6,8 +6,8 @@ export const company = {
   heroCta: "Start Your Session",
   heroVideoUrl: "/skyline.mp4",
   logoUrl: "/tuh-logo.png",
-  email: "bobbydigital513@gmail.com",
-  location: "San Diego, CA",
+  email: "tuhproductions@gmail.com",
+  location: "Shasta County, CA",
   services: [
     "Music Production",
     "Mixing & Mastering",
