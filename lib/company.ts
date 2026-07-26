@@ -4,7 +4,7 @@ export const company = {
   heroTagline: "We Engineer The Sound.",
   heroSubTagline: "Production. Mixing. Mastering.",
   heroCta: "Start Your Session",
-  heroVideoUrl: "https://d8j0ntlcm91z4.cloudfront.net/user_3F8bBVZIiZA8w6i5ZF5b1RBHda1/hf_20260726_133313_83566aad-4b07-4d1e-b0c7-f092a68c54ea.mp4",
+  heroVideoUrl: "https://d8j0ntlcm91z4.cloudfront.net/user_3F8bBVZIiZA8w6i5ZF5b1RBHda1/hf_20260726_135003_8fdc97ac-4f9f-41c7-83d8-68d0fd60aedf.mp4",
   logoUrl: "/tuh-logo.png",
   email: "tuhproductions@gmail.com",
   location: "Shasta County, CA",

@@ -1,59 +1,12 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { company } from "@/lib/company";
 
 export default function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const directionRef = useRef<1 | -1>(1);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    let frameId = 0;
-    const STEP = 1 / 30; // ~30fps scrub speed
-
-    const tick = () => {
-      if (!video.paused && !video.ended) {
-        frameId = requestAnimationFrame(tick);
-        return;
-      }
-      if (video.duration) {
-        const next = video.currentTime + directionRef.current * STEP;
-        if (next >= video.duration) {
-          video.currentTime = video.duration;
-          directionRef.current = -1;
-        } else if (next <= 0) {
-          video.currentTime = 0;
-          directionRef.current = 1;
-        } else {
-          video.currentTime = next;
-        }
-      }
-      frameId = requestAnimationFrame(tick);
-    };
-
-    const onLoaded = () => {
-      video.play().catch(() => {
-        // autoplay blocked — fall back to manual scrub
-        frameId = requestAnimationFrame(tick);
-      });
-
-      video.addEventListener("ended", () => {
-        directionRef.current = -1;
-        frameId = requestAnimationFrame(tick);
-      });
-    };
-
-    video.addEventListener("loadedmetadata", onLoaded);
-    return () => {
-      cancelAnimationFrame(frameId);
-      video.removeEventListener("loadedmetadata", onLoaded);
-    };
-  }, []);
 
   return (
     <section className="relative h-screen bg-[#0a0a0a] overflow-hidden">
@@ -62,6 +15,7 @@ export default function HeroSection() {
         ref={videoRef}
         src={company.heroVideoUrl}
         autoPlay
+        loop
         muted
         playsInline
         className="absolute inset-0 h-full w-full object-cover"
