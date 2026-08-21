@@ -16,8 +16,8 @@ export const company = {
     "Artist Development",
   ],
   merch: [
-    { name: "Born To Create Tee", price: "$35", image: "https://d8j0ntlcm91z4.cloudfront.net/user_3F8bBVZIiZA8w6i5ZF5b1RBHda1/hf_20260726_134122_2605dda0-6ac4-4bb9-8442-379b4d27d4c3.png" },
-    { name: "Born To Create Hoodie", price: "$65", image: "https://d8j0ntlcm91z4.cloudfront.net/user_3F8bBVZIiZA8w6i5ZF5b1RBHda1/hf_20260726_134403_dad9387d-4440-4c32-9b03-b73640bcdf9e.png" },
-    { name: "Born To Create Crewneck", price: "$55", image: "https://d8j0ntlcm91z4.cloudfront.net/user_3F8bBVZIiZA8w6i5ZF5b1RBHda1/hf_20260726_134406_6b3f0ff5-33c4-446b-8310-40f10d83300f.png" },
+    { name: "Born To Create Tee", price: "$35", image: "https://d8j0ntlcm91z4.cloudfront.net/user_3F8bBVZIiZA8w6i5ZF5b1RBHda1/hf_20260726_134122_2605dda0-6ac4-4bb9-8442-379b4d27d4c3.png", url: "https://store.tuhproductions.com/product-details/product/68f5491397a1447cadb17ede/?variant=68f5491366345f09baebfbb4" },
+    { name: "Born To Create Hoodie", price: "$65", image: "https://d8j0ntlcm91z4.cloudfront.net/user_3F8bBVZIiZA8w6i5ZF5b1RBHda1/hf_20260726_134403_dad9387d-4440-4c32-9b03-b73640bcdf9e.png", url: "https://store.tuhproductions.com/product-details/product/6a5b844e824b1a359e81627a/?variant=6a5b8450b76fa225f6f497b0" },
+    { name: "Born To Create Crewneck", price: "$55", image: "https://d8j0ntlcm91z4.cloudfront.net/user_3F8bBVZIiZA8w6i5ZF5b1RBHda1/hf_20260726_134406_6b3f0ff5-33c4-446b-8310-40f10d83300f.png", url: "https://store.tuhproductions.com/product-details/product/6a5a7c792f4e256aff209bcf/?variant=6a5a7c7a2f4e2584e1209bd7" },
   ],
 };

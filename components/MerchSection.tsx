@@ -24,8 +24,11 @@ export default function MerchSection() {
 
         <div className="mt-14 grid gap-8 sm:grid-cols-3">
           {company.merch.map((item) => (
-            <div
+            <a
               key={item.name}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-white/30"
             >
               <div className="relative aspect-square w-full overflow-hidden bg-[#111]">
@@ -39,8 +42,11 @@ export default function MerchSection() {
               <div className="p-6 text-center">
                 <h3 className="text-xl font-semibold text-white">{item.name}</h3>
                 <p className="mt-1 text-sm text-white/50">{item.price}</p>
+                <p className="mt-3 text-xs font-semibold uppercase tracking-widest text-white/40 transition-colors group-hover:text-white/70">
+                  Shop Now →
+                </p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
